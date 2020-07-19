@@ -86,12 +86,12 @@ public class MainClass {
 
   private void parsingRecords(LinkedList<ItemRecord> arrayList) {
 
-    Set<String> names = new HashSet<>();
+//    Set<String> names = new HashSet<>();
     Map<String, Double> prices = new HashMap<>();
 
     for (ItemRecord itemRecord : arrayList) {
       System.out.println("itemRecord = " + itemRecord);
-      names.add(itemRecord.desk.toLowerCase());
+//      names.add(itemRecord.desk.toLowerCase());
       prices.putIfAbsent(itemRecord.desk.toLowerCase(), 0.0);
       prices.computeIfPresent(itemRecord.desk.toLowerCase(),
           (s, aDouble) -> aDouble + getDoubleFromString(itemRecord.price));
@@ -103,12 +103,7 @@ public class MainClass {
       pairs.add(new Pair<>(s, price));
     }
 
-    pairs.sort(new Comparator<Pair<String, Double>>() {
-      @Override
-      public int compare(Pair<String, Double> stringDoublePair, Pair<String, Double> t1) {
-        return Double.compare(stringDoublePair.getValue(), t1.getValue());
-      }
-    });
+    pairs.sort(Comparator.comparingDouble(Pair::getValue));
 
     for (Pair<String, Double> pair : pairs) {
       System.out.println("pair = " + pair);
